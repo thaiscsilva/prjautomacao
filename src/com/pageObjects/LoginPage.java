@@ -12,28 +12,28 @@ import com.core.interfaces.PageObjects;
 public class LoginPage extends TestCore implements PageObjects {
 	
 	// Login header
-	By lbl_loginHeader = By.xpath("//h1[text()='Login']");
+	By lblLoginHeader = By.xpath("//h1[text()='Login']");
 	
 	// Login fields
-	By lbl_username = By.name("username") ;
-	By lbl_password = By.name("password");
-	By btn_login = By.id("btnLogin");
+	By lblUsername = By.name("username") ;
+	By lblPassword = By.name("password");
+	By btnLogin = By.id("btnLogin");
 	
 	// Validation alert
-	By lbl_wrongUser = By.xpath("//div[normalize-space()='Wrong username or password.']");
+	By lblWrongUser = By.xpath("//div[normalize-space()='Wrong username or password.']");
 	
 	@Override
 	public void validatePageLoaded() {
-		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(lbl_loginHeader));
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(lblLoginHeader));
 	}
 	
 	/**
 	 * This login method will login into our application with the username and password defined in out config.properties file.
 	 */
 	public void doLogin() {
-		driver.findElement(lbl_username).sendKeys(prop.getProperty("username"));
-		driver.findElement(lbl_password).sendKeys(prop.getProperty("password"));
-		driver.findElement(btn_login).click();
+		driver.findElement(lblUsername).sendKeys(prop.getProperty("username"));
+		driver.findElement(lblPassword).sendKeys(prop.getProperty("password"));
+		driver.findElement(btnLogin).click();
 	}
 	
 	/**
@@ -42,16 +42,18 @@ public class LoginPage extends TestCore implements PageObjects {
 	 * @param password
 	 */
 	public void doLogin(String username, String password) {
-		driver.findElement(lbl_username).sendKeys(username);
-		driver.findElement(lbl_password).sendKeys(password);
-		driver.findElement(btn_login).click();
+		driver.findElement(lblUsername).sendKeys(username);
+		driver.findElement(lblPassword).sendKeys(password);
+		driver.findElement(btnLogin).click();
 	}
 
 	/**
-	 * 
+	 * Validates that when the user is trying to login with wrong data, that the application
+	 * will show the expected message passed by parameter by the test.
+	 * @param expectedMessage
 	 */
 	public void validateWrongUsernameOrPasswordAlert(String expectedMessage) {
-		String currentMessage = driver.findElement(lbl_wrongUser).getText();
+		String currentMessage = driver.findElement(lblWrongUser).getText();
 		assertEquals(currentMessage, expectedMessage);
 	}
 	
