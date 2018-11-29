@@ -1,9 +1,5 @@
 package com.core;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -13,31 +9,18 @@ import org.testng.annotations.BeforeMethod;
 
 public class TestCore {
 	public static WebDriver driver;
-	public static Properties prop;
-
-	public TestCore() {
-		try {
-			prop = new Properties();
-			FileInputStream inputStream = new FileInputStream(".//config.properties");
-			prop.load(inputStream);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static void initialize() {
-		String browser = prop.getProperty("browser");
-		switch (browser) {
-		case "chrome":
+		String browser = Settings.getProperty("browser");
+		switch (browser.toUpperCase().trim()) {
+		case "CHROME":
 			System.setProperty("webdriver.chrome.driver", ".//drivers//chromedriver.exe");
 			driver = new ChromeDriver();
 			break;
-		case "ff":
+		case "FF":
 
 			break;
-		case "ie":
+		case "IE":
 
 			break;
 		default:
@@ -48,13 +31,13 @@ public class TestCore {
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-		driver.get(prop.getProperty("url"));
-		
+		driver.get(EnvironmentDefinitions.URL);
 	}
 
 	@BeforeMethod
 	public void beforeTest() {
-		initialize();
+		Settings.loadConfiguration();
+		EnvironmentDefinitions.defineEnvironment();
 	}
 
 	@AfterMethod

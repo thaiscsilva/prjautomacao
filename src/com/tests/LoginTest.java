@@ -10,6 +10,9 @@ public class LoginTest extends TestCore {
 
 	@Test(enabled = true)
 	public void loginSuccessfully() {
+		
+		initialize();
+		
 		// Instantiating our pages
 		LoginPage pLoginPage = new LoginPage();
 		InvoiceListPage pInvoiceListPage = new InvoiceListPage();
@@ -28,6 +31,8 @@ public class LoginTest extends TestCore {
 		String password = "abc123";
 		String expectedMessage = "Wrong username or password.";
 
+		initialize();
+		
 		LoginPage pLoginPage = new LoginPage();
 
 		pLoginPage.validatePageLoaded();

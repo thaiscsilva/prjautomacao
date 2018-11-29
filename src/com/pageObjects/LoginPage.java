@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.core.Settings;
 import com.core.TestCore;
 import com.core.interfaces.PageObjects;
 
@@ -31,8 +32,8 @@ public class LoginPage extends TestCore implements PageObjects {
 	 * This login method will login into our application with the username and password defined in out config.properties file.
 	 */
 	public void doLogin() {
-		driver.findElement(lblUsername).sendKeys(prop.getProperty("username"));
-		driver.findElement(lblPassword).sendKeys(prop.getProperty("password"));
+		driver.findElement(lblUsername).sendKeys(Settings.getProperty("username"));
+		driver.findElement(lblPassword).sendKeys(Settings.getProperty("password"));
 		driver.findElement(btnLogin).click();
 	}
 	
